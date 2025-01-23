@@ -30,7 +30,6 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
     housing_tgz.extractall(path=housing_path)
     housing_tgz.close()
 
-
 fetch_housing_data()
 
 
@@ -41,6 +40,7 @@ def load_housing_data(housing_path=HOUSING_PATH):
 
 housing = load_housing_data()
 
+
 train_set, test_set = train_test_split(housing, test_size=0.2, random_state=42)
 
 housing["income_cat"] = pd.cut(
@@ -48,6 +48,7 @@ housing["income_cat"] = pd.cut(
     bins=[0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
     labels=[1, 2, 3, 4, 5],
 )
+
 
 
 split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
@@ -153,7 +154,6 @@ rnd_search = RandomizedSearchCV(
     scoring="neg_mean_squared_error",
     random_state=42,
 )
-
 rnd_search.fit(housing_prepared, housing_labels)
 cvres = rnd_search.cv_results_
 
