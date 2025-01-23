@@ -4,6 +4,7 @@ skip-string-normalization = true
 
 [tool.isort]
 profile = "black"
+float_to_top = true
 line_length = 88
 remove_redundant_aliases = true
 
