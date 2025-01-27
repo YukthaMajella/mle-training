@@ -20,12 +20,14 @@ jobs:
       - name: Configure 'defaults' channel explicitly in Conda
         run: |
           source $CONDA/etc/profile.d/conda.sh
-          conda config --add channels defaul ts
+          conda config --add channels defaults
 
       - name: Install flake8 and run pythoncode
         run: |
           source $CONDA/etc/profile.d/conda.sh
           conda activate mle-dev
           conda install -y flake8 
+          isort nonstandardcode.py
+          black nonstandardcode.py
           flake8 nonstandardcode.py
           python nonstandardcode.py
