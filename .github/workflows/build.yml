@@ -1,11 +1,6 @@
-on:
-  push:
-    branches:
-      - main
-      - fix/*
-  pull_request:
-    branches:
-      - main
+name: build-with-conda
+
+on: push
 jobs:
   custom-installer:
     name: Ex5 Miniforge for PyPy
