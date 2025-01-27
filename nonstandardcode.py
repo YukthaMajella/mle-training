@@ -1,4 +1,4 @@
-gimport os
+import os
 import tarfile
 
 import numpy as np
