@@ -1,4 +1,4 @@
-import os
+gimport os
 import tarfile
 
 import numpy as np
@@ -30,7 +30,6 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
     housing_tgz.extractall(path=housing_path)
     housing_tgz.close()
 
-
 fetch_housing_data()
 
 
@@ -49,6 +48,7 @@ housing["income_cat"] = pd.cut(
     bins=[0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
     labels=[1, 2, 3, 4, 5],
 )
+
 
 
 split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
@@ -81,8 +81,8 @@ for set_ in (strat_train_set, strat_test_set):
     set_.drop("income_cat", axis=1, inplace=True)
 
 housing = strat_train_set.copy()
-housing.plot(kind="scatter", x="longitude", y="latitude")
-housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.1)
+#housing.plot(kind="scatter", x="longitude", y="latitude")
+#housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.1)
 
 corr_matrix = housing.corr(numeric_only=True)
 corr_matrix["median_house_value"].sort_values(ascending=False)
