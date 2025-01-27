@@ -16,12 +16,15 @@ jobs:
           allow-softlinks: true
           show-channel-urls: true
           use-only-tar-bz2: true
+          activate-environment: mle-dev
+          environment-file: envv.yml
+          python-version: 3.13.1
       - run: |
           conda info
           conda list
           conda config --show-sources
           conda config --show
-          conda env create -f env.yml
+          conda env create -f envv.yml
           conda activate mle-dev
           isort .
           black .
