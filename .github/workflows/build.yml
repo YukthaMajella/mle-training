@@ -1,33 +1,37 @@
-name: build-with-conda
+name: CI Workflow
 
-on: push
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - "feature/**"
+
 jobs:
-  custom-installer:
-    name: Ex5 Miniforge for PyPy
-    runs-on: "ubuntu-latest"
-    defaults:
-      run:
-        shell: bash -el {0}
+  build:
+    name: Set up Conda Environment
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: conda-incubator/setup-miniconda@v3
-        with:
-          installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
-          allow-softlinks: true
-          show-channel-urls: true
-          use-only-tar-bz2: true
-          activate-environment: mle-dev
-          environment-file: envv.yml
-          python-version: 3.13.1
-      - run: |
-          conda info
-          conda list
-          conda config --show-sources
-          conda config --show
-          conda env create -f envv.yml
-          conda activate mle-dev
-          isort .
-          black .
-          flake8 . --count --show-source --statistics
-          python nonstandardcode.py
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          conda-version: "24.11.2"
+          environment-file: env.yml
+          activate-environment: mle-dev
+
+      - name: Configure Conda to add 'defaults' channel explicitly
+        run: |
+          source $CONDA/etc/profile.d/conda.sh
+          conda config --add channels defaults
+
+      - name: Install flake8 and run pythoncode
+        run: |
+          source $CONDA/etc/profile.d/conda.sh
+          conda activate mle-dev
+          conda install -y flake8  # Ensures flake8 is available
+          flake8 nonstandardcode.py
+          python nonstandardcode.py
