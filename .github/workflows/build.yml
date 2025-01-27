@@ -4,7 +4,7 @@ on: push
 
 jobs:
   build:
-    name: Set up Conda Environment
+    name: Setup Conda Environment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -17,15 +17,15 @@ jobs:
           environment-file: env.yml
           activate-environment: mle-dev
 
-      - name: Configure Conda to add 'defaults' channel explicitly
+      - name: Configure 'defaults' channel explicitly in Conda
         run: |
           source $CONDA/etc/profile.d/conda.sh
-          conda config --add channels defaults
+          conda config --add channels defaul ts
 
       - name: Install flake8 and run pythoncode
         run: |
           source $CONDA/etc/profile.d/conda.sh
           conda activate mle-dev
-          conda install -y flake8  # Ensures flake8 is available
+          conda install -y flake8 
           flake8 nonstandardcode.py
           python nonstandardcode.py
