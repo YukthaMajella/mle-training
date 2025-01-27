@@ -26,6 +26,8 @@ jobs:
         run: |
           source $CONDA/etc/profile.d/conda.sh
           conda activate mle-dev
+          conda install -y isort 
+          conda install -y black 
           conda install -y flake8 
           isort nonstandardcode.py
           black nonstandardcode.py
