@@ -6,12 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "HousePricingPredictor"
 version = "0.0.1"
 description = "This package is used for the house pricing prediction problem."
-long_description = "file: README" 
-long_description_content_type = "text/markdown"
 authors = [
     { name = "Majella Yuktha Biju", email = "majella.biju@tigeranalytics.com" }
 ]
-python_requires = ">=3.10"
 dynamic = ["description", "version"]
 
 [tool.setuptools.packages.find]
