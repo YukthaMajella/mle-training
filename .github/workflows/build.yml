@@ -2,11 +2,6 @@ name: Build Package
 
 on:
   push:
-    branches:
-      - 'fix/*'  
-  pull_request:
-    branches:
-      - main
 
 jobs:
   build:
