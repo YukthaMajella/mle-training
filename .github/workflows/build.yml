@@ -75,4 +75,6 @@ jobs:
 
     - name: Run nonstandardcode.py
       run: |
-        python -c "from HousePricingPredictor import nonstandardcode; nonstandardcode.run()"
+        source $CONDA/etc/profile.d/conda.sh
+        conda activate mle-dev
+        python -m HousePricingPredictor.nonstandardcode
