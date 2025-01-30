@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "HousePricingPredictor"
+version = "0.0.1"
 
 [tool.black]
 line_length = 88
