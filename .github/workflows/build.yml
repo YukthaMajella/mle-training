@@ -38,3 +38,40 @@ jobs:
         name: build-artifacts
         path: |
           dist/*
+
+
+  test:
+    name: Job 2 - Conda setup, download artifact, install the package and run script
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Setup Miniconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        conda-version: "24.11.2"
+        environment-file: env.yml
+        activate-environment: mle-dev
+
+    - name: Configure 'defaults' channel explicitly in Conda and activate environment
+      run: |
+        source $CONDA/etc/profile.d/conda.sh
+        conda config --add channels defaults
+        conda activate mle-dev
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build-artifacts
+        path: ./artifacts
+
+    - name: Install the package
+      run: |
+        pip install ./artifacts/dist/*.whl  
+
+    - name: Run nonstandardcode.py
+      run: |
+        python -c "from HousePricingPredictor import nonstandardcode; nonstandardcode.run()"
