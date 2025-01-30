@@ -9,7 +9,6 @@ description = "This package is used for the house pricing prediction problem."
 authors = [
     { name = "Majella Yuktha Biju", email = "majella.biju@tigeranalytics.com" }
 ]
-dynamic = ["description", "version"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
