@@ -33,6 +33,9 @@ jobs:
         name: build-artifacts
         path: |
           dist/*
+    
+    - name: List files in dist/
+      run: ls -l dist/
 
 
   test:
@@ -57,11 +60,16 @@ jobs:
         conda config --add channels defaults
         conda activate mle-dev
 
+    - name: Display directory tree
+      run: tree -d
+  
     - name: Download build artifacts
       uses: actions/download-artifact@v3
       with:
         name: build-artifacts
         path: ./artifacts
+    - name: List files in ./artifacts
+      run: ls -l ./artifacts/dist/
 
     - name: Install the package
       run: |
