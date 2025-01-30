@@ -1,35 +1,40 @@
-name: CI Workflow
+name: Build Package
 
-on: push
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-    name: Setup Conda Environment
+    name: Job 1 - Build the package and upload artifacts
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Check out repository
+      uses: actions/checkout@v2
 
-      - name: Setup Miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          conda-version: "24.11.2"
-          environment-file: env.yml
-          activate-environment: mle-dev
+    - name: Install tree CLI tool
+      run: sudo apt-get install tree
 
-      - name: Configure 'defaults' channel explicitly in Conda
-        run: |
-          source $CONDA/etc/profile.d/conda.sh
-          conda config --add channels defaults
+    - name: Display directory tree before building
+      run: tree -d
 
-      - name: Install flake8 and run pythoncode
-        run: |
-          source $CONDA/etc/profile.d/conda.sh
-          conda activate mle-dev
-          conda install -y isort 
-          conda install -y black 
-          conda install -y flake8 
-          isort nonstandardcode.py
-          black nonstandardcode.py
-          flake8 nonstandardcode.py
-          python nonstandardcode.py
+    - name: Build package
+      run: |
+        pip install build
+        python -m build .
+        echo "Building the package..."
+
+    - name: Display directory tree after building
+      run: tree -d
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-artifacts
+        path: |
+          dist/*
