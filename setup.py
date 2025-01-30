@@ -10,7 +10,7 @@ setup(
     author="Majella Yuktha Biju",
     author_email="majella.biju@tigeranalytics.com",
     description="This package is used for the house pricing prediction problem.",
-    long_description=open("README.md").read(),  # Long description from your README file
+    long_description=open("README").read(),  # Long description from your README file
     long_description_content_type="text/markdown",  # Format of the long description
     url="https://github.com/YukthaMajella/mle-training",  # URL for the project
     python_requires=">=3.10",  # Minimum Python version supported
