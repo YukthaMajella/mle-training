@@ -3,7 +3,7 @@ name: Build Package
 on:
   push:
     branches:
-      - main
+      - 'fix/*'  
   pull_request:
     branches:
       - main
