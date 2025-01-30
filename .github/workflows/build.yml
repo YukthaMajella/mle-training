@@ -67,13 +67,11 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: build-artifacts
-        path: ./artifacts
-    - name: List files in ./artifacts
-      run: ls -l ./artifacts/dist/
+        path: ./dist
 
     - name: Install the package
       run: |
-        pip install ./artifacts/dist/*.whl  
+        pip install ./dist/*.whl  
 
     - name: Run nonstandardcode.py
       run: |
