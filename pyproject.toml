@@ -12,7 +12,7 @@ authors = [
     { name = "Majella Yuktha Biju", email = "majella.biju@tigeranalytics.com" }
 ]
 python_requires = ">=3.10"
-dynamic = ["description", "long_description"]
+dynamic = ["description", "version"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
