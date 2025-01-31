@@ -60,4 +60,6 @@ jobs:
     - name: Run tests with pytest
       run: |
         pip install pytest
+        source $CONDA/etc/profile.d/conda.sh
+        conda activate mle-dev
         pytest --disable-warnings -q
