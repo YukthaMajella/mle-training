@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    name: Job 1 - Conda setup, build, install and run the package
+    name: Conda setup, build, install and run the package
     runs-on: ubuntu-latest
 
     steps:
@@ -55,11 +55,11 @@ jobs:
 
     - name: Install the package
       run: |
+        conda activate mle-dev
         pip install ./dist/*.whl  
 
     - name: Run tests with pytest
       run: |
-        pip install pytest
-        source $CONDA/etc/profile.d/conda.sh
         conda activate mle-dev
+        pip install pytest
         pytest --disable-warnings -q
