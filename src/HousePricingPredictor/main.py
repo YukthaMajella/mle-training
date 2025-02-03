@@ -1,6 +1,9 @@
 import os
 
-from DataIngestion import (
+from sklearn.impute import SimpleImputer
+from sklearn.model_selection import train_test_split
+
+from HousePricingPredictor.DataIngestion import (
     clean_strat_data,
     fetch_housing_data,
     load_housing_data,
@@ -9,10 +12,11 @@ from DataIngestion import (
     proportions_comparison,
     stratified_split,
 )
-from ModelScoring import model_scoring
-from ModelTraining import get_best_model_gridsearch, model_training
-from sklearn.impute import SimpleImputer
-from sklearn.model_selection import train_test_split
+from HousePricingPredictor.ModelScoring import model_scoring
+from HousePricingPredictor.ModelTraining import (
+    get_best_model_gridsearch,
+    model_training,
+)
 
 DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
 HOUSING_PATH = os.path.join("datasets", "housing")
