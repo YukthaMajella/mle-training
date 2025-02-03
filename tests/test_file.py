@@ -20,6 +20,7 @@ def test_package_installation():
     assert result.returncode == 0, f"Installation failed: {result.stderr}"
 
     try:
+        import HousePricingPredictor
         from HousePricingPredictor import nonstandardcode
     except ImportError as e:
         pytest.fail(f"Package import failed: {str(e)}")
