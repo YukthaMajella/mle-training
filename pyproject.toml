@@ -1,3 +1,21 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "HousePricingPredictor"
+version = "0.0.1"
+description = "This package is used for the house pricing prediction problem."
+authors = [
+    { name = "Majella Yuktha Biju", email = "majella.biju@tigeranalytics.com" }
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.poetry.scripts]
+housepricingpredictor = "HousePricingPredictor.nonstandardcode:main"
+
 [tool.black]
 line_length = 88
 skip-string-normalization = true
