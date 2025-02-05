@@ -5,43 +5,8 @@ on:
 
 jobs:
   build:
-    name: Job 1 - Build the package and upload artifacts
+    name: Conda setup, build, install and run the package
     runs-on: ubuntu-latest
-
-    steps:
-    - name: Check out repository
-      uses: actions/checkout@v2
-
-    - name: Install tree CLI tool
-      run: sudo apt-get install tree
-
-    - name: Display directory tree before building
-      run: tree -d
-
-    - name: Build package
-      run: |
-        pip install build
-        python -m build .
-        echo "Building the package..."
-
-    - name: Display directory tree after building
-      run: tree -d
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: build-artifacts
-        path: |
-          dist/*
-    
-    - name: List files in dist/
-      run: ls -l dist/
-
-
-  test:
-    name: Job 2 - Conda setup, download artifact, install the package and run script
-    runs-on: ubuntu-latest
-    needs: build
 
     steps:
     - name: Check out repository
@@ -60,21 +25,43 @@ jobs:
         conda config --add channels defaults
         conda activate mle-dev
 
-    - name: Display directory tree
+    - name: Install tree CLI tool
+      run: sudo apt-get install tree
+
+    - name: Display directory tree before building
       run: tree -d
-  
+
+    - name: Build package
+      run: |
+        pip install build
+        python -m build .
+        echo "Building the package..."
+
+    - name: Display directory tree after building
+      run: tree -d
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: |
+          dist/*
+    
     - name: Download build artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: build-artifacts
         path: ./dist
 
     - name: Install the package
       run: |
+        source $CONDA/etc/profile.d/conda.sh
+        conda activate mle-dev
         pip install ./dist/*.whl  
 
-    - name: Run nonstandardcode.py
+    - name: Run tests with pytest
       run: |
         source $CONDA/etc/profile.d/conda.sh
         conda activate mle-dev
-        python -m HousePricingPredictor.nonstandardcode
+        pip install pytest
+        pytest --disable-warnings -q
