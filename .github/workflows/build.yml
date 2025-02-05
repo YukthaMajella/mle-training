@@ -1,0 +1,35 @@
+name: CI Workflow
+
+on: push
+
+jobs:
+  build:
+    name: Setup Conda Environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          conda-version: "24.11.2"
+          environment-file: env.yml
+          activate-environment: mle-dev
+
+      - name: Configure 'defaults' channel explicitly in Conda
+        run: |
+          source $CONDA/etc/profile.d/conda.sh
+          conda config --add channels defaults
+
+      - name: Install flake8 and run pythoncode
+        run: |
+          source $CONDA/etc/profile.d/conda.sh
+          conda activate mle-dev
+          conda install -y isort 
+          conda install -y black 
+          conda install -y flake8 
+          isort nonstandardcode.py
+          black nonstandardcode.py
+          flake8 nonstandardcode.py
+          python nonstandardcode.py
