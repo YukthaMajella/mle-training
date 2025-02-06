@@ -3,7 +3,7 @@ import os
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 
-from house_pricing_predictor.DataIngestion import (
+from house_pricing_predictor.data_ingestion import (
     clean_strat_data,
     fetch_housing_data,
     load_housing_data,
@@ -12,8 +12,8 @@ from house_pricing_predictor.DataIngestion import (
     proportions_comparison,
     stratified_split,
 )
-from house_pricing_predictor.ModelScoring import model_scoring
-from house_pricing_predictor.ModelTraining import (
+from house_pricing_predictor.model_scoring import model_scoring
+from house_pricing_predictor.model_training import (
     get_best_model_gridsearch,
     model_training,
 )
