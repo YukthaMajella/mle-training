@@ -11,7 +11,7 @@ def test_package_installation():
             "-m",
             "pip",
             "install",
-            "./dist/house_pricing_predictor-0.0.1-py3-none-any.whl",
+            "./dist/HousePricingPredictor-0.0.1-py3-none-any.whl",
         ],
         capture_output=True,
         text=True,
@@ -46,7 +46,6 @@ def test_package_installation():
 
     try:
         from house_pricing_predictor.data_ingestion import load_housing_data
-
         assert callable(load_housing_data)
     except ImportError as e:
         pytest.fail(
@@ -55,7 +54,6 @@ def test_package_installation():
 
     try:
         from house_pricing_predictor.model_training import model_training
-
         assert callable(model_training)
     except ImportError as e:
         pytest.fail(
@@ -64,8 +62,7 @@ def test_package_installation():
 
     try:
         from house_pricing_predictor.model_scoring import model_scoring
-
-        assert callable(model_training)
+        assert callable(model_scoring)
     except ImportError as e:
         pytest.fail(
             f"Failed to import model_scoring function from ModelScoring module: {str(e)}"
