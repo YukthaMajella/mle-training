@@ -28,6 +28,22 @@ jobs:
     - name: Install tree CLI tool
       run: sudo apt-get install tree
 
+    - name: Display directory tree before installing the package in dev mode
+      run: tree -d
+
+    - name: Install the package in development mode
+      run: |
+        source $CONDA/etc/profile.d/conda.sh
+        conda activate mle-dev
+        pip install -e . 
+
+    - name: Run unit tests with pytest
+      run: |
+        source $CONDA/etc/profile.d/conda.sh
+        conda activate mle-dev
+        pip install pytest
+        pytest --disable-warnings -q 
+
     - name: Display directory tree before building
       run: tree -d
 
@@ -58,10 +74,3 @@ jobs:
         source $CONDA/etc/profile.d/conda.sh
         conda activate mle-dev
         pip install ./dist/*.whl  
-
-    - name: Run tests with pytest
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda activate mle-dev
-        pip install pytest
-        pytest --disable-warnings -q

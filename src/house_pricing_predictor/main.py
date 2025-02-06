@@ -1,9 +1,10 @@
 import os
 
+import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 
-from HousePricingPredictor.DataIngestion import (
+from house_pricing_predictor.data_ingestion import (
     clean_strat_data,
     fetch_housing_data,
     load_housing_data,
@@ -12,8 +13,8 @@ from HousePricingPredictor.DataIngestion import (
     proportions_comparison,
     stratified_split,
 )
-from HousePricingPredictor.ModelScoring import model_scoring
-from HousePricingPredictor.ModelTraining import (
+from house_pricing_predictor.model_scoring import model_scoring
+from house_pricing_predictor.model_training import (
     get_best_model_gridsearch,
     model_training,
 )
@@ -61,6 +62,18 @@ def main():
     final_mse, final_rmse, final_mae = model_scoring(
         final_model, X_test_prepared, y_test
     )
+
+    pd.set_option('display.max_columns', None)  # Display all columns
+    pd.set_option('display.width', None)  # No truncation by width
+    pd.set_option(
+        'display.max_colwidth', None
+    )  # No truncation of individual column content
+
+    print(X_test_prepared[0:1])
+    print(X_test_prepared.shape)
+    print("---")
+    print(y_test[0:1])
+    print(type(y_test))
 
 
 if __name__ == "__main__":
