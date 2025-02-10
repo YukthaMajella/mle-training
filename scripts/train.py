@@ -1,10 +1,9 @@
 import argparse
 import os
-import sys
-import pandas as pd
 import pickle
+import sys
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+import pandas as pd
 
 from house_pricing_predictor.model_scoring import model_scoring
 from house_pricing_predictor.model_training import (
@@ -12,7 +11,10 @@ from house_pricing_predictor.model_training import (
     model_training,
 )
 
-#python scripts/ingest_data.py /home/mle-training/processed_data /home/mle-training/models
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
+
+# python scripts/ingest_data.py /home/mle-training/processed_data /home/mle-training/models
 def train_model(input_data_path, output_path):
 
     housing_prepared = pd.read_pickle(f'{input_data_path}/housing_prepared.pkl')
@@ -43,9 +45,6 @@ def train_model(input_data_path, output_path):
         pickle.dump(final_model, f)
 
     print(f"Model saved to {output_path}")
-
-
-
 
 
 if __name__ == "__main__":

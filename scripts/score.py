@@ -1,14 +1,17 @@
 import argparse
 import os
-import sys
-import pandas as pd
 import pickle
+import sys
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+import pandas as pd
 
 from house_pricing_predictor.model_scoring import model_scoring
 
-#python scripts/score.py /home/mle-training/processed_data /home/mle-training/models
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
+
+# python scripts/score.py /home/mle-training/processed_data /home/mle-training/models
+
 
 def score_model(data_path, input_model_path):
     X_test_prepared = pd.read_pickle(f'{data_path}/X_test_prepared.pkl')
@@ -21,6 +24,7 @@ def score_model(data_path, input_model_path):
     )
     housing_predictions.to_pickle(f'{data_path}/housing_test_predictions.pkl')
     print(f"Output predictions saved to {data_path}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Ingest and preprocess data.")

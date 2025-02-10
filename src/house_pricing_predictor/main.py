@@ -22,6 +22,7 @@ DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
 HOUSING_PATH = os.path.join("datasets", "housing")
 HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
 
+
 def main():
     fetch_housing_data(HOUSING_URL, HOUSING_PATH)
     housing = load_housing_data(HOUSING_PATH)
