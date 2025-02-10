@@ -35,7 +35,6 @@ def test_model_training():
 
     lin_reg, tree_reg, rnd_search, grid_search = model_training(df_tr, eg_tr_labels)
 
-    
     assert lin_reg is not None
     assert tree_reg is not None
     assert rnd_search is not None

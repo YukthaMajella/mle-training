@@ -3,6 +3,7 @@ import os
 import pickle
 import sys
 
+import numpy as np
 import pandas as pd
 
 from house_pricing_predictor.model_scoring import model_scoring
@@ -22,7 +23,7 @@ def score_model(data_path, input_model_path):
     housing_predictions, final_mse, final_rmse, final_mae = model_scoring(
         final_model, X_test_prepared, y_test
     )
-    housing_predictions.to_pickle(f'{data_path}/housing_test_predictions.pkl')
+    np.save(f'{data_path}/housing_test_predictions.npy', housing_predictions)
     print(f"Output predictions saved to {data_path}")
 
 
