@@ -98,7 +98,7 @@ jobs:
         source $CONDA/etc/profile.d/conda.sh
         conda activate mle-dev
         pip install pytest
-        pytest tests/installation_test --disable-warnings -q
+        pytest tests/test_file.py
 
         
   deploy-job:
