@@ -11,10 +11,8 @@ authors = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.poetry.scripts]
-housepricingpredictor = "HousePricingPredictor.nonstandardcode:main"
+where = ["src/HousePricingPredictor"]
+include = ["HousePricingPredictor*", "HousePricingPredictor/*"]  
 
 [tool.black]
 line_length = 88
