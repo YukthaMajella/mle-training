@@ -113,9 +113,17 @@ jobs:
         name: build-artifacts
         path: ./dist
 
+    - name: Setup Miniconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        conda-version: "24.11.2"
+        environment-file: env.yml
+        activate-environment: mle-dev
+
     - name: Install the package from .whl file
       run: |
         source $CONDA/etc/profile.d/conda.sh
+        conda config --add channels defaults
         conda activate mle-dev
         pip install ./dist/*.whl  
 
