@@ -147,8 +147,8 @@ jobs:
       run: |
         source $CONDA/etc/profile.d/conda.sh
         conda activate mle-dev
-        python scripts/ingest_data.py /home/mle-training/processed_data
-        python scripts/ingest_data.py /home/mle-training/processed_data /home/mle-training/models
-        python scripts/score.py /home/mle-training/processed_data /home/mle-training/models
+        python scripts/ingest_data.py /home/runner/work/mle-training/mle-training/processed_data
+        python scripts/train.py /home/runner/work/mle-training/mle-training/processed_data /home/runner/work/mle-training/mle-training/models
+        python scripts/score.py /home/runner/work/mle-training/mle-training/processed_data /home/runner/work/mle-training/mle-training/models
 
 
