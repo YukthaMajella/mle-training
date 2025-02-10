@@ -1,12 +1,12 @@
+import os
+import sys
+
 import pandas as pd
 import pytest
 
-import sys
-import os
+from src.house_pricing_predictor.model_training import model_training
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-
-from house_pricing_predictor.model_training import model_training
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 
 def test_model_training():

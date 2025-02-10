@@ -1,11 +1,8 @@
 import pandas as pd
 import pytest
-import sys
-import os
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+from src.house_pricing_predictor.data_ingestion import add_features
 
-from house_pricing_predictor.data_ingestion import add_features
 
 def test_loading_data():
     eg_data = {

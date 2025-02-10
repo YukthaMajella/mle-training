@@ -42,7 +42,9 @@ jobs:
         source $CONDA/etc/profile.d/conda.sh
         conda activate mle-dev
         pip install pytest
-        pytest tests/unit_test --disable-warnings -q 
+        pytest tests/test_data_ingestion.py
+        pytest tests/test_training.py
+        pytest tests/test_scoring.py
       continue-on-error: false
     
   build-job:

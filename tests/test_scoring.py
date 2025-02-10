@@ -1,13 +1,8 @@
 import pandas as pd
 import pytest
 
-import sys
-import os
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-
-from house_pricing_predictor.model_scoring import model_scoring
-from house_pricing_predictor.model_training import model_training
+from src.house_pricing_predictor.model_scoring import model_scoring
+from src.house_pricing_predictor.model_training import model_training
 
 
 def test_model_training():
@@ -40,6 +35,7 @@ def test_model_training():
 
     lin_reg, tree_reg, rnd_search, grid_search = model_training(df_tr, eg_tr_labels)
 
+    
     assert lin_reg is not None
     assert tree_reg is not None
     assert rnd_search is not None
@@ -70,7 +66,8 @@ def test_model_training():
     assert df_te.shape[0] == 1
     assert y_test_labels.shape[0] == 1
 
-    mse, rmse, mae = model_scoring(lin_reg, df_te, y_test_labels)
+    housing_predictions, mse, rmse, mae = model_scoring(lin_reg, df_te, y_test_labels)
+    assert housing_predictions is not None
     assert mse is not None
     assert rmse is not None
     assert mae is not None
