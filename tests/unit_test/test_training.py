@@ -6,7 +6,7 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from src.house_pricing_predictor.model_training import model_training
+from house_pricing_predictor.model_training import model_training
 
 
 def test_model_training():
