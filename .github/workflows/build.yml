@@ -103,6 +103,7 @@ jobs:
         
   deploy-job:
     name: Deploy package and run scripts
+    needs: build-job
     runs-on: ubuntu-latest
 
     steps:
@@ -111,19 +112,6 @@ jobs:
       with:
         name: build-artifacts
         path: ./dist
-
-    - name: Setup Miniconda
-      uses: conda-incubator/setup-miniconda@v3
-      with:
-        conda-version: "24.11.2"
-        environment-file: env.yml
-        activate-environment: mle-dev
-
-    - name: Configure 'defaults' channel explicitly in Conda and activate environment
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda config --add channels defaults
-        conda activate mle-dev
 
     - name: Install the package from .whl file
       run: |
