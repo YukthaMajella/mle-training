@@ -119,11 +119,16 @@ jobs:
         conda-version: "24.11.2"
         environment-file: env.yml
         activate-environment: mle-dev
+  
+    - name: Configure 'defaults' channel explicitly in Conda and activate environment
+      run: |
+        source $CONDA/etc/profile.d/conda.sh
+        conda config --add channels defaults
+        conda activate mle-dev
 
     - name: Install the package from .whl file
       run: |
         source $CONDA/etc/profile.d/conda.sh
-        conda config --add channels defaults
         conda activate mle-dev
         pip install ./dist/*.whl  
 
