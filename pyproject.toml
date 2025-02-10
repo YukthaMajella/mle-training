@@ -11,8 +11,8 @@ authors = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["src/HousePricingPredictor"]
-include = ["HousePricingPredictor*", "HousePricingPredictor/*"]  
+where = ["src/house_pricing_predictor"]
+include = ["house_pricing_predictor*", "house_pricing_predictor/*"]  
 
 [tool.black]
 line_length = 88
