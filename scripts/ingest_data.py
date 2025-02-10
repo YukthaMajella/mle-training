@@ -12,6 +12,7 @@ from house_pricing_predictor.data_ingestion import (
     fetch_housing_data,
     load_housing_data,
     prepare_train_data,
+    prepare_test_data,
     proportions_comparison,
     stratified_split,
 )
@@ -38,9 +39,12 @@ def ingest_data(output_path):
     imputer = SimpleImputer(strategy="median")
     imputer.fit(housing_num)
     housing_prepared = prepare_train_data(imputer, housing, housing_num)
+    X_test_prepared, y_test = prepare_test_data(strat_test_set, imputer)
 
     housing_prepared.to_pickle(f'{output_path}/housing_prepared.pkl')
     housing_labels.to_pickle(f'{output_path}/housing_labels.pkl')
+    X_test_prepared.to_pickle(f'{output_path}/X_test_prepared.pkl')
+    y_test.to_pickle(f'{output_path}/y_test.pkl')
     print(f"Data saved to {output_path}")
 
 if __name__ == "__main__":

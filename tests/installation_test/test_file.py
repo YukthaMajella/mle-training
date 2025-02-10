@@ -5,7 +5,6 @@ import pytest
 
 
 def test_package_installation():
-    '''
     result = subprocess.run(
         [
             sys.executable,
@@ -18,7 +17,7 @@ def test_package_installation():
         text=True,
     )
 
-    assert result.returncode == 0, f"Installation failed: {result.stderr}"'''
+    assert result.returncode == 0, f"Installation failed: {result.stderr}"
 
     try:
         import house_pricing_predictor
