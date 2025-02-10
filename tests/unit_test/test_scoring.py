@@ -6,8 +6,8 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from house_pricing_predictor.model_scoring import model_scoring
-from house_pricing_predictor.model_training import model_training
+from src.house_pricing_predictor.model_scoring import model_scoring
+from src.house_pricing_predictor.model_training import model_training
 
 
 def test_model_training():
