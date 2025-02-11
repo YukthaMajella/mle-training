@@ -65,7 +65,8 @@ def test_model_training():
     assert df_te.shape[0] == 1
     assert y_test_labels.shape[0] == 1
 
-    mse, rmse, mae = model_scoring(lin_reg, df_te, y_test_labels)
+    housing_predictions, mse, rmse, mae = model_scoring(lin_reg, df_te, y_test_labels)
+    assert housing_predictions is not None
     assert mse is not None
     assert rmse is not None
     assert mae is not None

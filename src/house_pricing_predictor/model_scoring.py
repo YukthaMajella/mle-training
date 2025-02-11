@@ -7,7 +7,8 @@ def model_scoring(model, housing_prepared, housing_labels):
     mse = mean_squared_error(housing_labels, housing_predictions)
     rmse = np.sqrt(mse)
     mae = mean_absolute_error(housing_labels, housing_predictions)
-    # print("MSE:", mse)
-    # print("RMSE:", rmse)
-    # print("MAE:", mae)
-    return mse, rmse, mae
+    print("MSE:", mse)
+    print("RMSE:", rmse)
+    print("MAE:", mae)
+    return housing_predictions, mse, rmse, mae
+
