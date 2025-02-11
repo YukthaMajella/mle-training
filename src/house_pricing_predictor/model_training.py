@@ -36,13 +36,11 @@ def model_training(housing_prepared, housing_labels):
     cv_results(rnd_search)
 
     param_grid = [
-        # try 12 (3×4) combinations of hyperparameters
         {"n_estimators": [3, 10, 30], "max_features": [2, 4, 6, 8]},
-        # then try 6 (2×3) combinations with bootstrap set as False
         {"bootstrap": [False], "n_estimators": [3, 10], "max_features": [2, 3, 4]},
     ]
     forest_reg = RandomForestRegressor(random_state=42)
-    # train across 5 folds, that's a total of (12+6)*5=90 rounds of training
+
     grid_search = GridSearchCV(
         forest_reg,
         param_grid,
