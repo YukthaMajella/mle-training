@@ -1,5 +1,6 @@
 import os
 
+import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 
@@ -61,6 +62,18 @@ def main():
     final_mse, final_rmse, final_mae = model_scoring(
         final_model, X_test_prepared, y_test
     )
+
+    pd.set_option('display.max_columns', None)  # Display all columns
+    pd.set_option('display.width', None)  # No truncation by width
+    pd.set_option(
+        'display.max_colwidth', None
+    )  # No truncation of individual column content
+
+    print(X_test_prepared[0:1])
+    print(X_test_prepared.shape)
+    print("---")
+    print(y_test[0:1])
+    print(type(y_test))
 
 
 if __name__ == "__main__":
