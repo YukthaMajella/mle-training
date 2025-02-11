@@ -150,5 +150,3 @@ jobs:
         python scripts/ingest_data.py /home/runner/work/mle-training/mle-training/processed_data
         python scripts/train.py /home/runner/work/mle-training/mle-training/processed_data /home/runner/work/mle-training/mle-training/models
         python scripts/score.py /home/runner/work/mle-training/mle-training/processed_data /home/runner/work/mle-training/mle-training/models
-
-

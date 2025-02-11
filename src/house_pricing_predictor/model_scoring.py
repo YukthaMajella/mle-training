@@ -11,3 +11,4 @@ def model_scoring(model, housing_prepared, housing_labels):
     print("RMSE:", rmse)
     print("MAE:", mae)
     return housing_predictions, mse, rmse, mae
+
