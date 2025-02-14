@@ -30,7 +30,21 @@ The project is structured into several modules. Each module handles a specific t
    :maxdepth: 2
    :caption: Contents:
 
-   data_ingestion.rst
-   model_training.rst
-   model_scoring.rst
+   data_ingestion
+   model_training
+   model_scoring
 
+API Documentation
+=================
+
+.. automodule:: house_pricing_predictor.data_ingestion
+   :members:
+   :undoc-members:
+
+.. automodule:: house_pricing_predictor.model_training
+   :members:
+   :undoc-members:
+
+.. automodule:: house_pricing_predictor.model_scoring
+   :members:
+   :undoc-members:
