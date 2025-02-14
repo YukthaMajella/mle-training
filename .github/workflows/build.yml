@@ -33,6 +33,7 @@ jobs:
     
     - name: Build Docs using Sphinx
       run: |
+        conda activate mle-dev
         conda install sphinx
         cd docs
         sphinx-build -b html . _build/html
