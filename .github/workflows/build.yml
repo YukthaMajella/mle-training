@@ -33,10 +33,11 @@ jobs:
     
     - name: Build Docs using Sphinx
       run: |
+        source $CONDA/etc/profile.d/conda.sh
         conda activate mle-dev
         conda install sphinx
         cd docs
-        sphinx-build -b html . _build/html
+        sphinx-build -b html . build/html
     
     - name: Display directory tree before building the docs
       run: tree -d
@@ -45,4 +46,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: docs-html
-        path: docs/_build/html
+        path: docs/build/html
