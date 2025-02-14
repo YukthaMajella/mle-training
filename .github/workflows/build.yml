@@ -36,7 +36,6 @@ jobs:
         source $CONDA/etc/profile.d/conda.sh
         conda activate mle-dev
         conda install sphinx
-        cd docs
         sphinx-build -b html docs/source docs/build/html
     
     - name: Display directory tree before building the docs
