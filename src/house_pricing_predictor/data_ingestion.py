@@ -1,6 +1,6 @@
 """
-This module contains the function for the data ingestion process for the House Pricing
-Predictor project.
+data_ingestion module contains the function for the data ingestion process for the 
+House Pricing Predictor project.
 
 It contains functions to reads input data from source, load it as dataframe, processes
 it, and stores it in a format that can be used for model training.

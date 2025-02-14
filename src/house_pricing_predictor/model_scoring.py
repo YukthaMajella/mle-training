@@ -1,6 +1,6 @@
 """
-This module contains the function for the scoring process of the House Pricing Predictor
-project.
+model_scoring module contains the function for the scoring process of the House Pricing
+Predictor project.
 
 It contains functions to read the data, load the pickled models and score the data.
 """
