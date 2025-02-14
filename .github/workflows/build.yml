@@ -4,117 +4,13 @@ on:
   push:
 
 jobs:
-  unit-test-job:
-    name: Conda setup, build, install and run the package in dev mode
+  doc-job: 
+    name: Build the docs using Sphinx
     runs-on: ubuntu-latest
 
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
-
-    - name: Setup Miniconda
-      uses: conda-incubator/setup-miniconda@v3
-      with:
-        conda-version: "24.11.2"
-        environment-file: env.yml
-        activate-environment: mle-dev
-
-    - name: Configure 'defaults' channel explicitly in Conda and activate environment
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda config --add channels defaults
-        conda activate mle-dev
-
-    - name: Install tree CLI tool
-      run: sudo apt-get install tree
-
-    - name: Display directory tree before installing the package in dev mode
-      run: tree -d
-
-    - name: Install the package in development mode
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda activate mle-dev
-        pip install -e . 
-
-    - name: Run unit tests with pytest
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda activate mle-dev
-        pip install pytest
-        pytest tests/test_data_ingestion.py
-        pytest tests/test_training.py
-        pytest tests/test_scoring.py
-      continue-on-error: false
-    
-  build-job:
-    name: Conda setup, build, install and run the package
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Check out repository
-      uses: actions/checkout@v2
-    
-    - name: Setup Miniconda
-      uses: conda-incubator/setup-miniconda@v3
-      with:
-        conda-version: "24.11.2"
-        environment-file: env.yml
-        activate-environment: mle-dev
-
-    - name: Configure 'defaults' channel explicitly in Conda and activate environment
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda config --add channels defaults
-        conda activate mle-dev
-
-    - name: Build package
-      run: |
-        pip install build
-        python -m build .
-        echo "Building the package..."
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-artifacts
-        path: |
-          dist/*
-    
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: build-artifacts
-        path: ./dist
-
-    - name: Install the package
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda activate mle-dev
-        pip install ./dist/*.whl  
-
-    - name: Run tests with pytest
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda activate mle-dev
-        pip install pytest
-        pytest tests/test_file.py
-
-        
-  deploy-job:
-    name: Deploy package and run scripts
-    needs: build-job
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Check out repository
-      uses: actions/checkout@v2
-    
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: build-artifacts
-        path: ./dist
 
     - name: Setup Miniconda
       uses: conda-incubator/setup-miniconda@v3
@@ -129,27 +25,23 @@ jobs:
         conda config --add channels defaults
         conda activate mle-dev
 
-    - name: Install the package from .whl file
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda activate mle-dev
-        pip install ./dist/*.whl  
+    - name: Install tree CLI tool
+      run: sudo apt-get install tree
 
-    - name: Run workflow scripts in python -h mode
+    - name: Display directory tree before building the docs
+      run: tree -d
+    
+    - name: Build Docs using Sphinx
       run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda activate mle-dev
-        python scripts/ingest_data.py -h
-        python scripts/ingest_data.py -h
-        python scripts/score.py -h
-
-    - name: Run workflow scripts in python mode
-      run: |
-        source $CONDA/etc/profile.d/conda.sh
-        conda activate mle-dev
-        python scripts/ingest_data.py /home/runner/work/mle-training/mle-training/processed_data \
-        --log-level DEBUG --log-path ./logs/ingest_data.log
-        python scripts/train.py /home/runner/work/mle-training/mle-training/processed_data /home/runner/work/mle-training/mle-training/models \
-            --log-level INFO --log-path ./logs/train.log --no-console-log
-        python scripts/score.py /home/runner/work/mle-training/mle-training/processed_data /home/runner/work/mle-training/mle-training/models \
-            --log-level WARNING --log-path ./logs/score.log
+        conda install sphinx
+        cd docs
+        sphinx-build -b html . _build/html
+    
+    - name: Display directory tree before building the docs
+      run: tree -d
+    
+    - name: Upload built HTML docs
+      uses: actions/upload-artifact@v3
+      with:
+        name: docs-html
+        path: docs/_build/html

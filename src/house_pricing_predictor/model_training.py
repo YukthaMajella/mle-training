@@ -1,11 +1,23 @@
+"""
+This module contains the function for the model training process for the House Pricing
+Predictor project.
+
+It contains functions to load the training data, train the models and stores it as a
+pickled object.
+
+"""
+
+import logging
+
 import numpy as np
 from scipy.stats import randint
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.tree import DecisionTreeRegressor
-import logging
+
 logger = logging.getLogger(__name__)
+
 
 def cv_results(model):
     cvres = model.cv_results_

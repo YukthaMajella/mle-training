@@ -1,8 +1,25 @@
+"""
+This script handles the data ingestion process for the House Pricing Predictor project.
+
+It reads input data from various sources, processes it, and stores it in a format that
+can be used for model training.
+
+Modules
+-------
+- data_ingestion: Functions for reading and processing data files.
+
+Usage
+-----
+python scripts/ingest_data.py /path/to/processed_data --log-level DEBUG --log-path
+./logs/ingest_data.log --no-console-log
+
+"""
+
 import argparse
+import logging
 import os
 import sys
-import logging
-from house_pricing_predictor.logging_config import setup_logging
+
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 
@@ -15,14 +32,27 @@ from house_pricing_predictor.data_ingestion import (
     proportions_comparison,
     stratified_split,
 )
+from house_pricing_predictor.logging_config import setup_logging
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 
-# python scripts/ingest_data.py /home/mle-training/processed_data --log-level DEBUG --log-path ./logs/ingest_data.log --no-console-log
-
-
 def ingest_data(output_path):
+    """
+    Ingests raw housing data, preprocesses it, and saves the processed datasets.
+
+    Parameters
+    ----------
+    output_path : str
+        The directory path where the processed data will be saved.
+
+    Returns
+    -------
+    None
+        This function doesn't return any value. It saves the processed data as pickle
+        files at the specified output path.
+    """
+
     DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
     HOUSING_PATH = os.path.join("datasets", "housing")
     HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
@@ -54,14 +84,28 @@ def ingest_data(output_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Ingest and preprocess data.")
     parser.add_argument("output_path", help="Path to save the processed data.")
-    parser.add_argument('--log-level', default='INFO', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
-                        help='Set the logging level (default: INFO)')
-    parser.add_argument('--log-path', type=str, default=None, help='Path to log file (default: None)')
-    parser.add_argument('--no-console-log', action='store_true', help='Disable console logging (default: True)')
+    parser.add_argument(
+        '--log-level',
+        default='INFO',
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        help='Set the logging level (default: INFO)',
+    )
+    parser.add_argument(
+        '--log-path', type=str, default=None, help='Path to log file (default: None)'
+    )
+    parser.add_argument(
+        '--no-console-log',
+        action='store_true',
+        help='Disable console logging (default: True)',
+    )
 
     args = parser.parse_args()
 
-    setup_logging(log_level=args.log_level, log_path=args.log_path, console_log=not args.no_console_log)
+    setup_logging(
+        log_level=args.log_level,
+        log_path=args.log_path,
+        console_log=not args.no_console_log,
+    )
 
     logger = logging.getLogger(__name__)
     logger.info("Starting data ingestion process...")
