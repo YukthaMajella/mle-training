@@ -30,6 +30,12 @@ def fetch_housing_data(housing_url, housing_path):
 
     housing_path : str
         The path to store the extracted data.
+
+    Returns
+    -------
+    None
+        The function does not return anything. It is used to extract data from the URL
+        link.
     """
     try:
         logger.info("Extracting data from source...")
