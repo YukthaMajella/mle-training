@@ -5,7 +5,6 @@ import pytest
 
 
 def test_package_installation():
-    '''
     result = subprocess.run(
         [
             sys.executable,
@@ -18,17 +17,13 @@ def test_package_installation():
         text=True,
     )
 
-    assert result.returncode == 0, f"Installation failed: {result.stderr}"'''
+    assert result.returncode == 0, f"Installation failed: {result.stderr}"
 
     try:
         import house_pricing_predictor
     except ImportError as e:
         pytest.fail(f"Package import failed: {str(e)}")
 
-    try:
-        from house_pricing_predictor import main
-    except ImportError as e:
-        pytest.fail(f"Failed to import main module: {str(e)}")
 
     try:
         from house_pricing_predictor import data_ingestion

@@ -1,7 +1,8 @@
 import argparse
 import os
 import sys
-
+import logging
+from house_pricing_predictor.logging_config import setup_logging
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 
@@ -18,7 +19,7 @@ from house_pricing_predictor.data_ingestion import (
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 
-# python scripts/ingest_data.py /home/mle-training/processed_data
+# python scripts/ingest_data.py /home/mle-training/processed_data --log-level DEBUG --log-path ./logs/ingest_data.log --no-console-log
 
 
 def ingest_data(output_path):
@@ -53,6 +54,20 @@ def ingest_data(output_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Ingest and preprocess data.")
     parser.add_argument("output_path", help="Path to save the processed data.")
+    parser.add_argument('--log-level', default='INFO', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+                        help='Set the logging level (default: INFO)')
+    parser.add_argument('--log-path', type=str, default=None, help='Path to log file (default: None)')
+    parser.add_argument('--no-console-log', action='store_true', help='Disable console logging (default: True)')
+
     args = parser.parse_args()
 
-    ingest_data(args.output_path)
+    setup_logging(log_level=args.log_level, log_path=args.log_path, console_log=not args.no_console_log)
+
+    logger = logging.getLogger(__name__)
+    logger.info("Starting data ingestion process...")
+    try:
+        logger.debug("Ingesting raw data...")
+        ingest_data(args.output_path)
+        logger.info("Data ingestion completed successfully.")
+    except Exception as e:
+        logger.error(f"Error during ingestion: {e}")

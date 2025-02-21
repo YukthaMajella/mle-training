@@ -3,18 +3,24 @@ import tarfile
 
 import numpy as np
 import pandas as pd
+import logging
 from six.moves import urllib
 from sklearn.model_selection import StratifiedShuffleSplit
 
+logger = logging.getLogger(__name__)
 
 def fetch_housing_data(housing_url, housing_path):
-    os.makedirs(housing_path, exist_ok=True)
-    tgz_path = os.path.join(housing_path, "housing.tgz")
-    urllib.request.urlretrieve(housing_url, tgz_path)
-    housing_tgz = tarfile.open(tgz_path)
-    housing_tgz.extractall(path=housing_path)
-    housing_tgz.close()
-
+    try:
+        logger.info("Extracting data from source...")
+        os.makedirs(housing_path, exist_ok=True)
+        tgz_path = os.path.join(housing_path, "housing.tgz")
+        urllib.request.urlretrieve(housing_url, tgz_path)
+        housing_tgz = tarfile.open(tgz_path)
+        housing_tgz.extractall(path=housing_path)
+        housing_tgz.close()
+        logger.debug("Data extracted successfully.")
+    except Exception as e:
+        logger.error(f"Error while extracting data: {e}")
 
 def load_housing_data(housing_path):
     csv_path = os.path.join(housing_path, "housing.csv")
@@ -92,13 +98,23 @@ def clean_strat_data(strat_train_set, strat_test_set):
 
 
 def prepare_train_data(imputer, housing, housing_num):
-    X = imputer.transform(housing_num)
-    housing_prepared = prepare_dataframe(X, housing_num, housing)
+    try:
+        logger.info("Preparing training dataframe...")
+        X = imputer.transform(housing_num)
+        housing_prepared = prepare_dataframe(X, housing_num, housing)
+        logger.debug("Training data is prepared successfully.")
+    except Exception as e:
+        logger.error(f"Error while preparing training data: {e}")
     return housing_prepared
 
 
 def prepare_test_data(strat_test_set, imputer):
-    X_test, y_test, X_test_num = data_manipulation(strat_test_set)
-    X_test_prepared = imputer.transform(X_test_num)
-    X_test_prepared = prepare_dataframe(X_test_prepared, X_test_num, X_test)
+    try:
+        logger.info("Preparing test dataframe...")
+        X_test, y_test, X_test_num = data_manipulation(strat_test_set)
+        X_test_prepared = imputer.transform(X_test_num)
+        X_test_prepared = prepare_dataframe(X_test_prepared, X_test_num, X_test)
+        logger.debug("Test data is prepared successfully.")
+    except Exception as e:
+        logger.error(f"Error while preparing test data: {e}")
     return X_test_prepared, y_test
