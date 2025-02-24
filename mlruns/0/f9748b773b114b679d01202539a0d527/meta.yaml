@@ -1,0 +1,15 @@
+artifact_uri: file:///home/mle-training/mlruns/0/f9748b773b114b679d01202539a0d527/artifacts
+end_time: 1740420537416
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f9748b773b114b679d01202539a0d527
+run_name: full_workflow_run
+run_uuid: f9748b773b114b679d01202539a0d527
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740420285753
+status: 3
+tags: []
+user_id: root

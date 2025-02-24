@@ -1,0 +1,15 @@
+artifact_uri: file:///home/mle-training/mlruns/0/2df167e180e3424e8883517978471443/artifacts
+end_time: 1740419849608
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2df167e180e3424e8883517978471443
+run_name: Data_Ingestion
+run_uuid: 2df167e180e3424e8883517978471443
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740419849592
+status: 4
+tags: []
+user_id: root

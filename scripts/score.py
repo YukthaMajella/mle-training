@@ -23,10 +23,14 @@ import sys
 import numpy as np
 import pandas as pd
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
 from house_pricing_predictor.logging_config import setup_logging
 from house_pricing_predictor.model_scoring import model_scoring
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+import mlflow
+
+
 
 
 def score_model(data_path, input_model_path):
@@ -48,17 +52,23 @@ def score_model(data_path, input_model_path):
         This function doesn't return any value. It saves the predictions for the scored
         data at the specified output path.
     """
+    with mlflow.start_run(run_name="model_scoring", nested=True) as run:
+        X_test_prepared = pd.read_pickle(f'{data_path}/X_test_prepared.pkl')
+        y_test = pd.read_pickle(f'{data_path}/y_test.pkl')
+        with open(f'{input_model_path}/final_model.pkl', 'rb') as m:
+            final_model = pickle.load(m)
 
-    X_test_prepared = pd.read_pickle(f'{data_path}/X_test_prepared.pkl')
-    y_test = pd.read_pickle(f'{data_path}/y_test.pkl')
-    with open(f'{input_model_path}/final_model.pkl', 'rb') as m:
-        final_model = pickle.load(m)
+        housing_predictions, final_mse, final_rmse, final_mae = model_scoring(
+            final_model, X_test_prepared, y_test
+        )
+        np.save(f'{data_path}/housing_test_predictions.npy', housing_predictions)
+        print(f"Output predictions saved to {data_path}")
 
-    housing_predictions, final_mse, final_rmse, final_mae = model_scoring(
-        final_model, X_test_prepared, y_test
-    )
-    np.save(f'{data_path}/housing_test_predictions.npy', housing_predictions)
-    print(f"Output predictions saved to {data_path}")
+        mlflow.log_metric("mse", final_mse)
+        mlflow.log_metric("rmse", final_rmse)
+        mlflow.log_metric("mae", final_mae)
+        mlflow.log_artifact(f'{data_path}/housing_test_predictions.npy')
+
 
 
 if __name__ == "__main__":

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/mle-training/mlruns/0/a22a03181f2a46b89391922103a54c70/artifacts
+end_time: 1740420537416
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a22a03181f2a46b89391922103a54c70
+run_name: model_scoring
+run_uuid: a22a03181f2a46b89391922103a54c70
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740420537333
+status: 3
+tags: []
+user_id: root

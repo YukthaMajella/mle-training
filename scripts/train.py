@@ -22,6 +22,8 @@ import sys
 
 import pandas as pd
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
 from house_pricing_predictor.logging_config import setup_logging
 from house_pricing_predictor.model_scoring import model_scoring
 from house_pricing_predictor.model_training import (
@@ -29,7 +31,8 @@ from house_pricing_predictor.model_training import (
     model_training,
 )
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+import mlflow
+
 
 
 def train_model(input_data_path, output_path):
@@ -50,23 +53,31 @@ def train_model(input_data_path, output_path):
         This function doesn't return any value. It saves the trained models at the
         specified output path.
     """
+    with mlflow.start_run(run_name="model_training", nested=True) as run:
+        housing_prepared = pd.read_pickle(f'{input_data_path}/housing_prepared.pkl')
+        housing_labels = pd.read_pickle(f'{input_data_path}/housing_labels.pkl')
 
-    housing_prepared = pd.read_pickle(f'{input_data_path}/housing_prepared.pkl')
-    housing_labels = pd.read_pickle(f'{input_data_path}/housing_labels.pkl')
+        lin_reg, tree_reg, rnd_search, grid_search = model_training(
+            housing_prepared, housing_labels
+        )
 
-    lin_reg, tree_reg, rnd_search, grid_search = model_training(
-        housing_prepared, housing_labels
-    )
+        final_model = get_best_model_gridsearch(grid_search, housing_prepared)
 
-    final_model = get_best_model_gridsearch(grid_search, housing_prepared)
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
 
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
+        with open(f'{output_path}/final_model.pkl', 'wb') as f:
+            pickle.dump(final_model, f)
 
-    with open(f'{output_path}/final_model.pkl', 'wb') as f:
-        pickle.dump(final_model, f)
+        print(f"Model saved to {output_path}")
 
-    print(f"Model saved to {output_path}")
+        for param, value in grid_search.best_params_.items():
+            mlflow.log_param(param, value)
+
+        mlflow.sklearn.log_model(final_model, "gridsearch_model")
+
+        score = grid_search.best_score_
+        mlflow.log_metric("best_score", score)
 
 
 if __name__ == "__main__":
