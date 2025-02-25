@@ -1,37 +1,37 @@
-house\_pricing\_predictor package
+house\_pricing\_predictor\_YUKTHAMAJELLA package
 =================================
 
 Submodules
 ----------
 
-house\_pricing\_predictor.data\_ingestion module
+house\_pricing\_predictor\_YUKTHAMAJELLA.data\_ingestion module
 ------------------------------------------------
 
-.. automodule:: house_pricing_predictor.data_ingestion
+.. automodule:: house_pricing_predictor_YUKTHAMAJELLA.data_ingestion
    :members:
    :undoc-members:
    :show-inheritance:
 
-house\_pricing\_predictor.logging\_config module
+house\_pricing\_predictor\_YUKTHAMAJELLA.logging\_config module
 ------------------------------------------------
 
-.. automodule:: house_pricing_predictor.logging_config
+.. automodule:: house_pricing_predictor_YUKTHAMAJELLA.logging_config
    :members:
    :undoc-members:
    :show-inheritance:
 
-house\_pricing\_predictor.model\_scoring module
+house\_pricing\_predictor\_YUKTHAMAJELLA.model\_scoring module
 -----------------------------------------------
 
-.. automodule:: house_pricing_predictor.model_scoring
+.. automodule:: house_pricing_predictor_YUKTHAMAJELLA.model_scoring
    :members:
    :undoc-members:
    :show-inheritance:
 
-house\_pricing\_predictor.model\_training module
+house\_pricing\_predictor\_YUKTHAMAJELLA.model\_training module
 ------------------------------------------------
 
-.. automodule:: house_pricing_predictor.model_training
+.. automodule:: house_pricing_predictor_YUKTHAMAJELLA.model_training
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ house\_pricing\_predictor.model\_training module
 Module contents
 ---------------
 
-.. automodule:: house_pricing_predictor
+.. automodule:: house_pricing_predictor_YUKTHAMAJELLA
    :members:
    :undoc-members:
    :show-inheritance:

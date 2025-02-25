@@ -5,7 +5,7 @@ from score import score_model
 
 
 def main():
-    remote_server_uri = "http://0.0.0.0:5000" # set to your server URI
+    remote_server_uri = "http://0.0.0.0:5000"
     mlflow.set_tracking_uri(remote_server_uri)
 
     exp_name = "HousePricing_Predictor"

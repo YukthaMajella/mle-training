@@ -7,7 +7,7 @@ Predictor project.
 import pandas as pd
 import pytest
 
-from src.house_pricing_predictor.data_ingestion import add_features
+from house_pricing_predictor_YUKTHAMAJELLA.data_ingestion import add_features
 
 
 def test_loading_data():

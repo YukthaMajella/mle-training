@@ -25,8 +25,8 @@ import pandas as pd
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from house_pricing_predictor.logging_config import setup_logging
-from house_pricing_predictor.model_scoring import model_scoring
+from house_pricing_predictor_YUKTHAMAJELLA.logging_config import setup_logging
+from house_pricing_predictor_YUKTHAMAJELLA.model_scoring import model_scoring
 
 import mlflow
 
