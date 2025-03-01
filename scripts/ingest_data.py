@@ -92,7 +92,8 @@ def ingest_data(output_path):
         mlflow.log_artifact(f'{output_path}/housing_labels.pkl')
         mlflow.log_artifact(f'{output_path}/X_test_prepared.pkl')
         mlflow.log_artifact(f'{output_path}/y_test.pkl')
-
+        print(f"Artifacts saved at: {mlflow.get_artifact_uri()}")
+        
 
 
 if __name__ == "__main__":

@@ -19,11 +19,11 @@ def main():
             print("Save to: {}".format(mlflow.get_artifact_uri()))
 
         with mlflow.start_run(run_name="model_training", nested=True):
-            train_model("/home/runner/work/mle-training/mle-training/processed_data", "/home/runner/work/mle-training/mle-training/models")
+            run_id  = train_model("/home/runner/work/mle-training/mle-training/processed_data", "/home/runner/work/mle-training/mle-training/models")
             print("Save to: {}".format(mlflow.get_artifact_uri()))
 
         with mlflow.start_run(run_name="model_scoring", nested=True):
-            score_model("/home/runner/work/mle-training/mle-training/processed_data", "/home/runner/work/mle-training/mle-training/models")
+            score_model("/home/runner/work/mle-training/mle-training/processed_data", "/home/runner/work/mle-training/mle-training/models", run_id)
             print("Save to: {}".format(mlflow.get_artifact_uri()))
 
 if __name__ == "__main__":
