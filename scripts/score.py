@@ -23,13 +23,17 @@ import sys
 import numpy as np
 import pandas as pd
 
-from house_pricing_predictor.logging_config import setup_logging
-from house_pricing_predictor.model_scoring import model_scoring
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
+from house_pricing_predictor_YUKTHAMAJELLA.logging_config import setup_logging
+from house_pricing_predictor_YUKTHAMAJELLA.model_scoring import model_scoring
 
-def score_model(data_path, input_model_path):
+import mlflow
+
+
+
+
+def score_model(data_path, input_model_path, run_id=None):
     """
     Reads the scoring data, predicts for the data by loading the pickled models and
     stores the predictions as a pickled file.
@@ -42,23 +46,40 @@ def score_model(data_path, input_model_path):
     input_model_path : str
         The directory path of the pickled model.
 
+    run_id : str or None, optional
+        The MLflow run ID of the trained model. If None, the function will attempt
+        to load the model from the local path.
+
     Returns
     -------
     None
         This function doesn't return any value. It saves the predictions for the scored
         data at the specified output path.
     """
+    with mlflow.start_run(run_name="model_scoring", nested=True) as run:
+        X_test_prepared = pd.read_pickle(f'{data_path}/X_test_prepared.pkl')
+        y_test = pd.read_pickle(f'{data_path}/y_test.pkl')
 
-    X_test_prepared = pd.read_pickle(f'{data_path}/X_test_prepared.pkl')
-    y_test = pd.read_pickle(f'{data_path}/y_test.pkl')
-    with open(f'{input_model_path}/final_model.pkl', 'rb') as m:
-        final_model = pickle.load(m)
+        if run_id is not None:
+            model_uri = f"runs:/{run_id}/gridsearch_model"
+            final_model = mlflow.sklearn.load_model(model_uri)
+            print(f"Model loaded from MLflow with run_id: {run_id}")
+        else:
+            with open(f'{input_model_path}/final_model.pkl', 'rb') as m:
+                final_model = pickle.load(m)
 
-    housing_predictions, final_mse, final_rmse, final_mae = model_scoring(
-        final_model, X_test_prepared, y_test
-    )
-    np.save(f'{data_path}/housing_test_predictions.npy', housing_predictions)
-    print(f"Output predictions saved to {data_path}")
+        housing_predictions, final_mse, final_rmse, final_mae = model_scoring(
+            final_model, X_test_prepared, y_test
+        )
+        np.save(f'{data_path}/housing_test_predictions.npy', housing_predictions)
+        print(f"Output predictions saved to {data_path}")
+
+        mlflow.log_metric("mse", final_mse)
+        mlflow.log_metric("rmse", final_rmse)
+        mlflow.log_metric("mae", final_mae)
+        mlflow.log_artifact(f'{data_path}/housing_test_predictions.npy')
+        print(f"Artifacts saved at: {mlflow.get_artifact_uri()}")
+
 
 
 if __name__ == "__main__":
@@ -79,7 +100,11 @@ if __name__ == "__main__":
         action='store_true',
         help='Disable console logging (default: True)',
     )
-
+    parser.add_argument(
+        '--run_id',
+        default = None,
+        help='MLFlow run id of the trained model (default: None)',
+    )
     args = parser.parse_args()
 
     setup_logging(
@@ -93,7 +118,7 @@ if __name__ == "__main__":
 
     try:
         logger.debug("Loading model and scoring data...")
-        score_model(args.input_data_path, args.input_model_path)
+        score_model(args.input_data_path, args.input_model_path, args.run_id)
         logger.info("Scoring completed successfully.")
     except Exception as e:
         logger.error(f"Error during scoring: {e}")
