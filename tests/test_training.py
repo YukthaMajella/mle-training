@@ -1,3 +1,9 @@
+"""
+This module contains the function to test the training module of the House Pricing
+Predictor project.
+
+"""
+
 import os
 import sys
 

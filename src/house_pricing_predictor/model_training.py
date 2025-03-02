@@ -1,20 +1,67 @@
+"""
+model_training module contains the function for the model training process for the House 
+Pricing Predictor project.
+
+It contains functions to load the training data, train the models and stores it as a
+pickled object.
+
+"""
+
+import logging
+
 import numpy as np
 from scipy.stats import randint
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.tree import DecisionTreeRegressor
-import logging
+
 logger = logging.getLogger(__name__)
 
+
 def cv_results(model):
+    """
+    Prints the cross validation results of the t5rained model.
+
+    Parameters
+    ----------
+    model : object
+        The trained machine learning model to be used for making predictions.
+
+    Returns
+    -------
+    None
+        This function doesn't return any value. It prints the model's cross validation
+        results.
+
+    """
     cvres = model.cv_results_
     for mean_score, params in zip(cvres["mean_test_score"], cvres["params"]):
         print(np.sqrt(-mean_score), params)
 
 
 def model_training(housing_prepared, housing_labels):
+    """
+    Trains multiple machine learning models using the provided training data and labels.
 
+    Parameters
+    ----------
+    housing_prepared : pandas.DataFrame
+        The preprocessed training data used to train the models.
+
+    housing_labels : pandas.Series
+        The target labels corresponding to the `housing_prepared` dataset.
+
+    Returns
+    -------
+    tuple
+        A tuple containing the following trained models:
+        - LinearRegression model
+        - DecisionTreeRegressor model
+        - RandomizedSearchCV (RandomForestRegressor)
+        - GridSearchCV (RandomForestRegressor)
+
+    """
     try:
         logger.info("Training the models...")
 
@@ -63,6 +110,25 @@ def model_training(housing_prepared, housing_labels):
 
 
 def get_best_model_gridsearch(grid_search, housing_prepared):
+    """
+    Identifies and returns the best model from the grid search based on cross-validation
+    results.
+
+    Parameters
+    ----------
+    grid_search : sklearn.model_selection.GridSearchCV
+        The GridSearchCV object containing the results of the grid search over multiple
+        hyperparameters.
+
+    housing_prepared : pandas.DataFrame
+        The preprocessed training data.
+
+    Returns
+    -------
+    sklearn.base.BaseEstimator
+        The best estimator (model) selected from the grid search.
+    """
+
     try:
         logger.info("Finging the best models...")
         feature_importances = grid_search.best_estimator_.feature_importances_

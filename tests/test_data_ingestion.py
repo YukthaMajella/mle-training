@@ -1,3 +1,9 @@
+"""
+This module contains the function to test the data ingestion module of the House Pricing
+Predictor project.
+
+"""
+
 import pandas as pd
 import pytest
 

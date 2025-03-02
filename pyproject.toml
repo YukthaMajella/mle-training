@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "HousePricingPredictor"
+name = "House Pricing Predictor"
 version = "0.0.1"
 description = "This package is used for the house pricing prediction problem."
 authors = [

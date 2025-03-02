@@ -1,3 +1,9 @@
+"""
+This module contains the function to test the installation and module imports of the 
+House Pricing Predictor project.
+
+"""
+
 import subprocess
 import sys
 
@@ -23,7 +29,6 @@ def test_package_installation():
         import house_pricing_predictor
     except ImportError as e:
         pytest.fail(f"Package import failed: {str(e)}")
-
 
     try:
         from house_pricing_predictor import data_ingestion
