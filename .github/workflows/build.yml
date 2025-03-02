@@ -15,8 +15,16 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
+    - name: Debugging - Print DockerHub Username
+      run: echo ${{ secrets.DOCKERHUB_USERNAME }}
+    
+    - name: Check Docker version and login status
+      run: |
+        docker --version
+        docker info
+
     - name: Login to Docker Hub
-      uses: docker/login-action@v3
+      uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
