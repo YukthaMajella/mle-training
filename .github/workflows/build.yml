@@ -23,9 +23,9 @@ jobs:
     
     - name: Build the Docker image
       run: |
-        docker build -t ${{ vars.DOCKER_USERNAME }}/house-price-prediction:pipeline-built .
+        docker build -t ${{ vars.DOCKERHUB_USERNAME }}/house-price-prediction:pipeline-built .
 
     - name: Push the Docker image to DockerHub
       run: |
-        docker push ${{ vars.DOCKER_USERNAME }}/house-price-prediction:pipeline-built
+        docker push ${{ vars.DOCKERHUB_USERNAME }}/house-price-prediction:pipeline-built
   
