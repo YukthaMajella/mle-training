@@ -5,7 +5,7 @@ from score import score_model
 
 
 def main():
-    remote_server_uri = "http://0.0.0.0:5000" # set to your server URI
+    remote_server_uri = "http://0.0.0.0:5000"
     mlflow.set_tracking_uri(remote_server_uri)
 
     exp_name = "HousePricing_Predictor"
@@ -19,11 +19,11 @@ def main():
             print("Save to: {}".format(mlflow.get_artifact_uri()))
 
         with mlflow.start_run(run_name="model_training", nested=True):
-            train_model("/home/runner/work/mle-training/mle-training/processed_data", "/home/runner/work/mle-training/mle-training/models")
+            run_id  = train_model("/home/runner/work/mle-training/mle-training/processed_data", "/home/runner/work/mle-training/mle-training/models")
             print("Save to: {}".format(mlflow.get_artifact_uri()))
 
         with mlflow.start_run(run_name="model_scoring", nested=True):
-            score_model("/home/runner/work/mle-training/mle-training/processed_data", "/home/runner/work/mle-training/mle-training/models")
+            score_model("/home/runner/work/mle-training/mle-training/processed_data", "/home/runner/work/mle-training/mle-training/models", run_id)
             print("Save to: {}".format(mlflow.get_artifact_uri()))
 
 if __name__ == "__main__":

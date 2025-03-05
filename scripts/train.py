@@ -24,9 +24,9 @@ import pandas as pd
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from house_pricing_predictor.logging_config import setup_logging
-from house_pricing_predictor.model_scoring import model_scoring
-from house_pricing_predictor.model_training import (
+from house_pricing_predictor_YUKTHAMAJELLA.logging_config import setup_logging
+from house_pricing_predictor_YUKTHAMAJELLA.model_scoring import model_scoring
+from house_pricing_predictor_YUKTHAMAJELLA.model_training import (
     get_best_model_gridsearch,
     model_training,
 )
@@ -50,8 +50,8 @@ def train_model(input_data_path, output_path):
     Returns
     -------
     None
-        This function doesn't return any value. It saves the trained models at the
-        specified output path.
+    run_id : str
+        The MLflow run ID of the trained model.
     """
     with mlflow.start_run(run_name="model_training", nested=True) as run:
         housing_prepared = pd.read_pickle(f'{input_data_path}/housing_prepared.pkl')
@@ -78,6 +78,9 @@ def train_model(input_data_path, output_path):
 
         score = grid_search.best_score_
         mlflow.log_metric("best_score", score)
+        print(f"Artifacts saved at: {mlflow.get_artifact_uri()}")
+        return run.info.run_id
+
 
 
 if __name__ == "__main__":

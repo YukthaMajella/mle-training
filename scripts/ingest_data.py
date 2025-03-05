@@ -25,7 +25,7 @@ from sklearn.model_selection import train_test_split
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from house_pricing_predictor.data_ingestion import (
+from house_pricing_predictor_YUKTHAMAJELLA.data_ingestion import (
     clean_strat_data,
     fetch_housing_data,
     load_housing_data,
@@ -34,7 +34,7 @@ from house_pricing_predictor.data_ingestion import (
     proportions_comparison,
     stratified_split,
 )
-from house_pricing_predictor.logging_config import setup_logging
+from house_pricing_predictor_YUKTHAMAJELLA.logging_config import setup_logging
 
 import mlflow
 import mlflow.pyfunc
@@ -92,7 +92,8 @@ def ingest_data(output_path):
         mlflow.log_artifact(f'{output_path}/housing_labels.pkl')
         mlflow.log_artifact(f'{output_path}/X_test_prepared.pkl')
         mlflow.log_artifact(f'{output_path}/y_test.pkl')
-
+        print(f"Artifacts saved at: {mlflow.get_artifact_uri()}")
+        
 
 
 if __name__ == "__main__":
