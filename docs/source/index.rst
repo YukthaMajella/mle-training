@@ -37,14 +37,14 @@ The project is structured into several modules. Each module handles a specific t
 API Documentation
 =================
 
-.. automodule:: house_pricing_predictor.data_ingestion
+.. automodule:: house_pricing_predictor_YUKTHAMAJELLA.data_ingestion
    :members:
    :undoc-members:
 
-.. automodule:: house_pricing_predictor.model_training
+.. automodule:: house_pricing_predictor_YUKTHAMAJELLA.model_training
    :members:
    :undoc-members:
 
-.. automodule:: house_pricing_predictor.model_scoring
+.. automodule:: house_pricing_predictor_YUKTHAMAJELLA.model_scoring
    :members:
    :undoc-members:

@@ -7,8 +7,8 @@ Predictor project.
 import pandas as pd
 import pytest
 
-from src.house_pricing_predictor.model_scoring import model_scoring
-from src.house_pricing_predictor.model_training import model_training
+from house_pricing_predictor_YUKTHAMAJELLA.model_scoring import model_scoring
+from house_pricing_predictor_YUKTHAMAJELLA.model_training import model_training
 
 
 def test_model_training():

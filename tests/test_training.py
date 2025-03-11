@@ -10,9 +10,7 @@ import sys
 import pandas as pd
 import pytest
 
-from src.house_pricing_predictor.model_training import model_training
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+from house_pricing_predictor_YUKTHAMAJELLA.model_training import model_training
 
 
 def test_model_training():

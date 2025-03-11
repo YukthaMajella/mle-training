@@ -11,13 +11,28 @@ import pytest
 
 
 def test_package_installation():
+
     result = subprocess.run(
         [
             sys.executable,
             "-m",
             "pip",
             "install",
-            "./dist/HousePricingPredictor-0.0.1-py3-none-any.whl",
+            "./dist/house_pricing_predictor_YUKTHAMAJELLA-0.0.1-py3-none-any.whl",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, f"Installation failed: {result.stderr}"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "./dist/house_pricing_predictor_yukthamajella-0.0.1.tar.gz",
         ],
         capture_output=True,
         text=True,
@@ -26,27 +41,27 @@ def test_package_installation():
     assert result.returncode == 0, f"Installation failed: {result.stderr}"
 
     try:
-        import house_pricing_predictor
+        import house_pricing_predictor_YUKTHAMAJELLA
     except ImportError as e:
         pytest.fail(f"Package import failed: {str(e)}")
 
     try:
-        from house_pricing_predictor import data_ingestion
+        from house_pricing_predictor_YUKTHAMAJELLA import data_ingestion
     except ImportError as e:
         pytest.fail(f"Failed to import DataIngestion module: {str(e)}")
 
     try:
-        from house_pricing_predictor import model_training
+        from house_pricing_predictor_YUKTHAMAJELLA import model_training
     except ImportError as e:
         pytest.fail(f"Failed to import ModelTraining module: {str(e)}")
 
     try:
-        from house_pricing_predictor import model_scoring
+        from house_pricing_predictor_YUKTHAMAJELLA import model_scoring
     except ImportError as e:
         pytest.fail(f"Failed to import ModelScoring module: {str(e)}")
 
     try:
-        from house_pricing_predictor.data_ingestion import load_housing_data
+        from house_pricing_predictor_YUKTHAMAJELLA.data_ingestion import load_housing_data
 
         assert callable(load_housing_data)
     except ImportError as e:
@@ -55,7 +70,7 @@ def test_package_installation():
         )
 
     try:
-        from house_pricing_predictor.model_training import model_training
+        from house_pricing_predictor_YUKTHAMAJELLA.model_training import model_training
 
         assert callable(model_training)
     except ImportError as e:
@@ -64,7 +79,7 @@ def test_package_installation():
         )
 
     try:
-        from house_pricing_predictor.model_scoring import model_scoring
+        from house_pricing_predictor_YUKTHAMAJELLA.model_scoring import model_scoring
 
         assert callable(model_training)
     except ImportError as e:

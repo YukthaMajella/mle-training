@@ -3,16 +3,22 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "House Pricing Predictor"
+name = "house_pricing_predictor_YUKTHAMAJELLA"
 version = "0.0.1"
 description = "This package is used for the house pricing prediction problem."
 authors = [
     { name = "Majella Yuktha Biju", email = "majella.biju@tigeranalytics.com" }
 ]
+license = {text = "MIT"}
+readme = "README.md"
+
+[project.urls]
+Homepage = "https://github.com/YukthaMajella/mle-training"
+Issues = "https://github.com/YukthaMajella/mle-training/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["house_pricing_predictor*"]
+include = ["house_pricing_predictor_YUKTHAMAJELLA*"]
 
 [tool.black]
 line_length = 88
